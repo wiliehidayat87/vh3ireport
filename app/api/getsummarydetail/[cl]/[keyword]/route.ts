@@ -7,7 +7,7 @@ export async function GET(
     { params }: { params: { cl: any, keyword: any } }
 ) {
 console.log(`cek data : ` + params.cl)
-  const res = await fetch(`http://localhost:8899/get-summary-detail/${params.cl}/${params.keyword}`, {
+  const res = await fetch(`http://52.57.27.221:8899/get-summary-detail/${params.cl}/${params.keyword}`, {
     method: 'GET',
     headers: {
       'Content-Type': '*',
