@@ -127,7 +127,7 @@ export default function Dashboard() {
         { 
             stats && stats.map((item : any, index: any) => 
             
-              <div className="card m-2 cursor-pointer border border-gray-400 rounded-lg hover:shadow-md hover:border-opacity-0 transform hover:-translate-y-1 transition-all duration-200 bg-white">
+              <div key={index} className="card m-2 cursor-pointer border border-gray-400 rounded-lg hover:shadow-md hover:border-opacity-0 transform hover:-translate-y-1 transition-all duration-200 bg-white">
                 <div className="m-3">
                   <span className="text-sm text-teal-800 font-mono bg-teal-100 inline rounded-full px-2 align-top float-right animate-pulse">{item.Tag}</span>
                   <h2 className="text-lg mb-2 font-bold">
@@ -150,7 +150,7 @@ export default function Dashboard() {
           <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
               <caption className="p-5 text-lg font-semibold text-left text-gray-900 bg-white dark:text-white dark:bg-gray-800">
                   Schedule Renewal
-                  <p className="mt-1 text-sm font-normal text-gray-500 dark:text-gray-400">Live schedules renewal ordered ascending by " push_time " data.</p>
+                  <p className="mt-1 text-sm font-normal text-gray-500 dark:text-gray-400">Live schedules renewal ordered ascending by ${`" push_time "`} data.</p>
               </caption>
               <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                   <tr>
@@ -184,7 +184,7 @@ export default function Dashboard() {
                       
                       /*<li key={index} onClick={() => handleClick(item.Id)}>{item.AmountUsersProcessed}</li> */
                       
-                      <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-slate-300 dark:hover:bg-slate-800">
+                      <tr key={index} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-slate-300 dark:hover:bg-slate-800">
                           <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                               {item.PushTime}
                           </th>
@@ -229,10 +229,10 @@ export default function Dashboard() {
 
           {detail?.SummarySubject && (detail.SummarySubject.map((item : IDetailSS, i : any) => 
 
-              <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+              <table key={i} className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
               <caption className="p-5 text-lg font-semibold text-left text-gray-900 bg-white dark:text-white dark:bg-gray-800">
-                  {i == 0 ? "RENEWAL - Detail Summary - July 2023" : null}
-                  <p className="mt-1 text-sm font-normal text-teal-400">{detail && (detail.Desc)} ( {detail && (detail.Label)} ) - Keyword " {item.Keyword} ".</p>
+                  {i == 0 ? `RENEWAL - Detail Summary - July 2023` : null}
+                  <p className="mt-1 text-sm font-normal text-teal-400">{detail && (detail.Desc)} ( {detail && (detail.Label)} ) - Keyword {item.Keyword}.</p>
               </caption>
               <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                 <tr>
@@ -242,8 +242,8 @@ export default function Dashboard() {
                   <th scope="col" className="px-6 py-3">
                       Total
                   </th>
-                  {item?.RowDate && (item.RowDate.map((thedate : string) => 
-                    <th scope="col" className="px-6 py-3">
+                  {item?.RowDate && (item.RowDate.map((thedate : string, index: any) => 
+                    <th key={index} scope="col" className="px-6 py-3">
                     {thedate}
                     </th>
                   ))}
@@ -252,15 +252,15 @@ export default function Dashboard() {
               <tbody>
 
               {item?.Renewal && (item.Renewal.map((r : IDetailSSS, i: number) => 
-                <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-slate-300 dark:hover:bg-slate-800">
+                <tr key={i} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-slate-300 dark:hover:bg-slate-800">
                   <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                       {r.Closereasons}
                   </th>
                   <td className="px-6 py-4">
                       {r.GrandTotal}
                   </td>
-                  {r?.Total && (r.Total.map((t : any) => 
-                    <td className="px-6 py-4">
+                  {r?.Total && (r.Total.map((t : any, index : any) => 
+                    <td key={index} className="px-6 py-4">
                         {t}
                     </td>
                   ))}
@@ -274,8 +274,8 @@ export default function Dashboard() {
                   <td className="px-6 py-4">
                   {item?.TotRenewal && (item?.TotRenewal.GrandTotal)}
                   </td>
-                  {item?.TotRenewal.Total && (item.TotRenewal.Total.map((t : any) => 
-                  <td className="px-6 py-4">
+                  {item?.TotRenewal.Total && (item.TotRenewal.Total.map((t : any, index : any) => 
+                  <td key={index} className="px-6 py-4">
                     {t}
                   </td>
                   ))}
@@ -292,8 +292,8 @@ export default function Dashboard() {
                       maximumFractionDigits: 4,
                     }).format(item?.BillRateRenewal.GrandTotal/100))}
                   </td>
-                  {item?.BillRateRenewal.Total && (item.BillRateRenewal.Total.map((t : any) => 
-                  <td className="px-6 py-4">
+                  {item?.BillRateRenewal.Total && (item.BillRateRenewal.Total.map((t : any, index : any) => 
+                  <td key={index} className="px-6 py-4">
                     {new Intl.NumberFormat('default', {
                       style: 'percent',
                       minimumFractionDigits: 4,
@@ -309,10 +309,10 @@ export default function Dashboard() {
 
           {detail?.SummarySubject && (detail.SummarySubject.map((item : IDetailSS, i : any) => 
 
-          <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+          <table key={i} className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
           <caption className="p-5 text-lg font-semibold text-left text-gray-900 bg-white dark:text-white dark:bg-gray-800">
-              {i == 0 ? "RETRY - Detail Summary - July 2023" : null}
-              <p className="mt-1 text-sm font-normal text-teal-400">{detail && (detail.Desc)} ( {detail && (detail.Label)} ) - Keyword " {item.Keyword} ".</p>
+              {i == 0 ? `RETRY - Detail Summary - July 2023` : null}
+              <p className="mt-1 text-sm font-normal text-teal-400">{detail && (detail.Desc)} ( {detail && (detail.Label)} ) - Keyword {item.Keyword}.</p>
           </caption>
           <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
             <tr>
@@ -322,8 +322,8 @@ export default function Dashboard() {
               <th scope="col" className="px-6 py-3">
                   Total
               </th>
-              {item?.RowDate && (item.RowDate.map((thedate : string) => 
-                <th scope="col" className="px-6 py-3">
+              {item?.RowDate && (item.RowDate.map((thedate : string, index : any) => 
+                <th key={index} scope="col" className="px-6 py-3">
                 {thedate}
                 </th>
               ))}
@@ -331,16 +331,16 @@ export default function Dashboard() {
           </thead>
           <tbody>
 
-          {item?.Retry && (item.Retry.map((r : IDetailSSS) => 
-            <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-slate-300 dark:hover:bg-slate-800">
+          {item?.Retry && (item.Retry.map((r : IDetailSSS, index : any) => 
+            <tr key={index} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-slate-300 dark:hover:bg-slate-800">
               <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                   {r.Closereasons}
               </th>
               <td className="px-6 py-4">
                   {r.GrandTotal}
               </td>
-              {r?.Total && (r.Total.map((t : any) => 
-                <td className="px-6 py-4">
+              {r?.Total && (r.Total.map((t : any, i : any) => 
+                <td key={i} className="px-6 py-4">
                     {t}
                 </td>
               ))}
@@ -354,8 +354,8 @@ export default function Dashboard() {
                   <td className="px-6 py-4">
                   {item?.TotRetry && (item?.TotRetry.GrandTotal)}
                   </td>
-                  {item?.TotRetry.Total && (item.TotRetry.Total.map((t : any) => 
-                  <td className="px-6 py-4">
+                  {item?.TotRetry.Total && (item.TotRetry.Total.map((t : any, index : any) => 
+                  <td key={index} className="px-6 py-4">
                     {t}
                   </td>
                   ))}
@@ -372,8 +372,8 @@ export default function Dashboard() {
                       maximumFractionDigits: 4,
                     }).format(item?.BillRateRetry.GrandTotal/100))}
                   </td>
-                  {item?.BillRateRetry.Total && (item.BillRateRetry.Total.map((t : any) => 
-                  <td className="px-6 py-4">
+                  {item?.BillRateRetry.Total && (item.BillRateRetry.Total.map((t : any, index : any) => 
+                  <td key={index} className="px-6 py-4">
                     {new Intl.NumberFormat('default', {
                       style: 'percent',
                       minimumFractionDigits: 4,
