@@ -1,6 +1,5 @@
 'use client';
-import { SetStateAction, useEffect, useState } from 'react'
-import { Identifier } from 'typescript';
+import { useEffect, useState } from 'react'
 
 export interface IDetailSSS {
   Closereasons: string, 
@@ -38,7 +37,7 @@ export interface IStats {
   Desc:     any,
 }
 
-export default function Dashboard() {
+export default function Home() {
   
   const [schedules, setSchedules] = useState([])
   const [detail, setDetail] = useState<IDetail | undefined>(undefined)
@@ -119,6 +118,28 @@ export default function Dashboard() {
     //getSummaryDetail(cl, keyword)
   }
 
+  const getSpesificStat = async (e : any, k : any, v : any) => {
+    
+    const resdata = await fetch(`/api/getstat/${k}/${v}`, {
+      method: 'GET',
+      headers: {
+        'Access-Control-Allow-Origin': '*'
+      },
+
+    }).then(function(response){
+      response.json().then(function(data) {
+          e.target.innerHTML = (k == "CURREV" ? new Intl.NumberFormat("de-DE", {style: "currency", currency: "IDR"}).format(data) : new Intl.NumberFormat().format(data))
+      });
+    }).catch(function(error) {
+        console.log('Fetch Error:', error);
+    });
+  }
+
+  const handleClickStat = async (e: any, k : any, v : any) => {
+    
+    await getSpesificStat(e, k, v)
+  }
+
   return (
     <main className="flex min-h-screen flex-col p-5">
     
@@ -127,7 +148,7 @@ export default function Dashboard() {
         { 
             stats && stats.map((item : any, index: any) => 
             
-              <div key={index} className="card m-2 cursor-pointer border border-gray-400 rounded-lg hover:shadow-md hover:border-opacity-0 transform hover:-translate-y-1 transition-all duration-200 bg-white">
+              <div key={index} className="card m-2 cursor-pointer border border-gray-400 rounded-lg hover:shadow-md hover:border-opacity-0 transform hover:-translate-y-1 transition-all duration-200 bg-white" onClick={(e) => handleClickStat(e, item.Keys, item.Values)}>
                 <div className="m-3">
                   <span className="text-sm text-teal-800 font-mono bg-teal-100 inline rounded-full px-2 align-top float-right animate-pulse">{item.Tag}</span>
                   <h2 className="text-lg mb-2 font-bold">
@@ -150,7 +171,7 @@ export default function Dashboard() {
           <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
               <caption className="p-5 text-lg font-semibold text-left text-gray-900 bg-white dark:text-white dark:bg-gray-800">
                   Schedule Renewal
-                  <p className="mt-1 text-sm font-normal text-gray-500 dark:text-gray-400">Live schedules renewal ordered ascending by ${`" push_time "`} data.</p>
+                  <p className="mt-1 text-sm font-normal text-gray-500 dark:text-gray-400">Live schedules renewal ordered ascending by {`" push_time "`} data.</p>
               </caption>
               <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                   <tr>
@@ -189,7 +210,7 @@ export default function Dashboard() {
                               {item.PushTime}
                           </th>
                           <td className="px-6 py-4">
-                              {item.StatusDesc}
+                            {item.StatusDesc == "Running" ? <span className="text-orange-600">{item.StatusDesc}</span> : <span className="text-lime-600">{item.StatusDesc}</span>}
                           </td>
                           <td className="px-6 py-4">
                               {item.ContentLabel}
